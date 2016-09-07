@@ -1,0 +1,11 @@
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <errno.h>
+
+#define SYS_helloworld 326
+
+int main(){
+  int rc = syscall(SYS_helloworld);
+  printf(iota(rc));
+  return 0;
+}
