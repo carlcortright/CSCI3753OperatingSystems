@@ -1,1 +1,7 @@
-./arch/x86/kernel/helloworld.c
+#include <linux/kernel.h>
+#include <linux/linkage.h>
+
+asmlinkage long sys_helloworld(void){
+  printk(KERN_ALERT "Hello world! \n");
+  return 0;
+}
