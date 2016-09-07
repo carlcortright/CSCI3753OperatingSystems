@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html>
+  	<head>
+    	<meta charset="utf-8">
+    	<title>Federated Identity Service | University of Colorado Boulder</title>
+    	<link rel="stylesheet" type="text/css" href="/idp/css/main.css">
+  	</head>
+  	<script type="text/javascript">
+	function toggle() {
+  		var ele = document.getElementById("toggleText");
+  		if(ele.style.display == "block") {
+        		ele.style.display = "none";
+    		}
+  		else {
+    		ele.style.display = "block";
+  		}
+	}
+	function toggleDos() {
+  		var ele = document.getElementById("toggleDosText");
+  		if(ele.style.display == "block") {
+        		ele.style.display = "none";
+    		}
+  		else {
+    		ele.style.display = "block";
+  		}
+	}
+  	</script>
+  	<body>
+    <div class="wrapper">
+      <div class="container">
+        <header>
+          <img src="/idp/images/cu-logo.png" alt="Replace or remove this logo">
+        </header>
+
+                <!DOCTYPE html>
+<!--
+<table width="100%" style="border:0px; padding:8px; background-color:#f2dede; font-family:Helvetica Neue, Helvetica, Arial, sans-serif; color:#b94a48;">
+  <tbody>
+    <tr>
+      <td>
+      <strong>Service Alert</strong>&nbsp;-&nbsp;
+      Web sites that use <strong>Federated Identity Service</strong> for login will be unavailable from 10:00pm Saturday, April 2 until 6:00pm Sunday, April 3, 2016 due to required electrical maintenance. Please plan accordingly. For more information
+      regarding this outage, please visit <a href="http://www.colorado.edu/oit/news" target="blank" style="color:#b94a48; font-weight:normal; text-decoration:underline">OIT News</a>.
+      </td>
+    </tr>
+  </tbody>
+</table>
+-->
+        
+        <div class="content">
+          <div class="column one">
+            
+
+            <form action="/idp/profile/SAML2/Redirect/SSO;jsessionid=3ACF1F7E6BD6C63A43BD6DDB38B0C327?execution=e1s1" method="post">
+
+                                                
+                          <div class="form-element-wrapper">
+                <label for="username">CU Login Name</label>
+				<br>
+		                <input class="form-element form-field" id="username" name="j_username" type="text"
+                	value="">
+              </div>
+
+              <div class="form-element-wrapper">
+                <label for="password">Identikey Password</label>
+				<br>
+		                <input class="form-element form-field" id="password" name="j_password" type="password" value="">
+              </div>
+
+                                                        
+              <div class="form-element-wrapper">
+                <input id="_shib_idp_revokeConsent" type="checkbox" name="_shib_idp_revokeConsent" value="true">
+                Check this box to view your <a href="javascript:toggle();">Digital ID Card</a> and reset release approvals before logging into the service. <a href="javascript:toggleDos();">Learn More...</a>              </div>
+
+<div id="toggleDosText" style="display:none;">
+  <hr />
+<p><font size="-1">By leaving this box unchecked, you will log directly into the IT service.<br />
+<br />
+You only need to check this box if you wish to view your Digital ID Card and/or make changes to it before you log into the IT service. Once you are done reviewing and/or editing your Digital ID card, you may click “Confirm” to submit your changes and log into the IT service.
+</font></p>
+</div>
+<div id="toggleText" style="display:none;">
+  <hr />
+<h5>Digital Id Card</h5>
+<p><font size="-1">The first time you access this website through this login page, you will be presented with a Digital ID Card listing the attributes that will be released. You will be asked to release the information. If you choose to deny the release, you will be unable to access the website you are trying to log into. At anytime, you can check the box next to<em> View and release my Digital ID Card</em>. Upon checking and logging in you will have the opportunity to view your Digital ID Card again and be prompted to provide your consent when you login to all websites that utlize Federated Identity Service. </font></p>
+</div>
+                          <div class="form-element-wrapper">
+                <button class="form-element form-button" type="submit" name="_eventId_proceed"
+                    onClick="this.childNodes[0].nodeValue='Logging in, please wait...'"
+                    >Continue</button>
+              </div>
+            
+                        </form>
+
+			
+                                                                                                                                              
+          </div>
+                                                                                                    Trouble signing in? <a href="http://www.colorado.edu/oit/webaccess/help" target="_blank">We can help</a>.</a>
+
+		<div id="ucb-additional-text">
+	  <p style="margin: 16px 0px;">To ensure you end your session with Federated Identity Service, you will need to quit your web browser when you are finished. Leaving your browser open may make you more vulnerable to another user gaining access through your account.</p>	  <p style="margin: 16px 0px;"><span style="color:#b20404; font-weight:bold">Note</span>: Due to the nature of this authentication page loading dynamically per service, <strong>DO NOT</strong> bookmark the URL in your browser's address bar. Instead, bookmark the service URL (e.g. <em>https://voicethread.colorado.edu</em> or <em>https://qualtrics.colorado.edu</em>).</p>	</div>
+	        </div>
+      </div>
+
+      <footer>
+        <div class="container container-footer">
+          <p class="footer-text"><a href="http://www.colorado.edu" target="_blank"><strong>University of Colorado Boulder</strong></a><br> <b><a href="http://www.colorado.edu/oit" target="_blank">Office of Information Technology</a></b><br> <a href="http://www.colorado.edu/oit/service-center" target="_blank">IT Service Center</a> | 303-735-HELP(4357)</p>
+        </div>
+      </footer>
+    </div>
+    
+ 	</body>
+</html>
