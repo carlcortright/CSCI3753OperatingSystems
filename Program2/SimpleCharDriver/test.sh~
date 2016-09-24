@@ -1,0 +1,18 @@
+make -C /lib/modules/$(uname -r)/build M=$PWD modules
+sudo rmmod simple_char_driver
+sudo insmod simple_char_driver.ko
+echo
+echo
+echo "Testing Read...."
+sudo cat /dev/simple_char_driver
+echo
+echo
+echo "Testing Write..."
+write1="First"
+write2="Second"
+sudo echo $write1 > sudo /dev/simple_char_driver
+sudo echo $write2 > sudo /dev/simple_char_driver
+echo
+echo
+echo "Testing Read again..."
+sudo cat /dev/simple_char_driver
