@@ -12,7 +12,6 @@ MODULE_LICENSE("GPL");
 static char device_buffer[BUFFER_SIZE];
 int num_opens = 0;
 int num_closes = 0;
-int dev_file_bytes = 0;
 
 ssize_t simple_char_driver_read (struct file *pfile, char __user *buffer, size_t length, loff_t *offset)
 {
@@ -27,9 +26,9 @@ ssize_t simple_char_driver_read (struct file *pfile, char __user *buffer, size_t
   if(*offset + length > sizeof(device_buffer)){
     length = sizeof(device_buffer) - *offset;
   }
-
+  
   // Copy length bytes from kernel space to user space
-  int err_code;
+  int err_code = 0;
   err_code = copy_to_user(buffer, device_buffer + *offset, length);
 
   // Print the number of bytes copied
@@ -58,17 +57,11 @@ ssize_t simple_char_driver_write (struct file *pfile, const char __user *buffer,
     printk(KERN_ALERT "Trying to write past the size of the buffer. Aborting write!");
     return 1;
   }
-
-  // Make sure the offset is the number of bytes in the device file
-  int position;
-  if(*offset != dev_file_bytes){
-    *offset = dev_file_bytes;
-  }
-
-  // Copy length bytes from user space to kernel space
-  int err_code;
-  err_code = copy_from_user(device_buffer + *offset, buffer, length);
   
+  // Copy length bytes from user space to kernel space
+  int err_code = 0;
+  err_code = copy_from_user(device_buffer + *offset, buffer, length);
+
   // Print the number of bytes copied
   if (err_code == 0){
     printk(KERN_ALERT "Wrote %d bytes", length);
@@ -76,8 +69,6 @@ ssize_t simple_char_driver_write (struct file *pfile, const char __user *buffer,
     printk(KERN_ALERT "Error encountered during simple_char_driver_write during copy_from_user!!");
     return 1;
   }  
-
-  dev_file_bytes += length;
   
   return length;
 }
@@ -108,7 +99,7 @@ struct file_operations simple_char_driver_file_operations = {
   .owner   = THIS_MODULE,
   /* add the function pointers to point to the corresponding file operations. look at the file fs.h in the linux souce code*/	
   .read = simple_char_driver_read,
-  .write = simple_char_driver_write,
+  .write = simeple_char_driver_write,
   .open = simple_char_driver_open,
   .release = simple_char_driver_close
 };
