@@ -15,12 +15,13 @@
 /*
 * Struct to hold the arguments to pass to a resolver thread
 */
-typedef struct arg_struct{
+typedef struct arg_struct {
   FILE* file;
   queue* q;
   pthread_cond_t* cv;
   pthread_mutex_t* mutex;
-};
+  int* alive;
+} args;
 
 /*
 * Adds each request from the file to the queue q
@@ -30,6 +31,6 @@ void* add_request(void* in);
 /*
 * Processes each request coming out of the queue
 */
-void* process_request(void* in);
+void* process_request(void* out);
 
 #endif
