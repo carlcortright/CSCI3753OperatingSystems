@@ -2,6 +2,10 @@
 ##### Author: Carl Cortright
 ##### Date: 10/15/2016
 
+## Goal
+
+Use PThread to make a multithreaded dns name resolution program
+
 ## Building
 
 Use the make utility to build the file.
