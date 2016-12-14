@@ -408,7 +408,7 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 	rewind(tmp); // Go to beginning
 
 	// Read the file
-	if (fread(buf, 1, size, tmp) == -1){
+	if ((short)fread(buf, 1, size, tmp) == -1){
       res = -errno;
   }
 
