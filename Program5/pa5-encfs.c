@@ -370,89 +370,6 @@ static int xmp_fsync(const char *path, int isdatasync,
 	return 0;
 }
 
-#ifdef HAVE_SETXATTR
-static int xmp_setxattr(const char *path, const char *name, const char *value,
-			size_t size, int flags)
-{
-	char full_path[PATH_MAX];
-	enter_path(full_path, path);
-
-	int res = lsetxattr(full_path, name, value, size, flags);
-	if (res == -1)
-		return -errno;
-	return 0;
-}
-
-static int xmp_getxattr(const char *path, const char *name, char *value,
-			size_t size)
-{
-	char full_path[PATH_MAX];
-	enter_path(full_path, path);
-
-	int res = lgetxattr(full_path, name, value, size);
-	if (res == -1)
-		return -errno;
-	return res;
-}
-
-static int xmp_listxattr(const char *path, char *list, size_t size)
-{
-	char full_path[PATH_MAX];
-	enter_path(full_path, path);
-
-	int res = llistxattr(full_path, list, size);
-	if (res == -1)
-		return -errno;
-	return res;
-}
-
-static int xmp_removexattr(const char *path, const char *name)
-{
-	char full_path[PATH_MAX];
-	enter_path(full_path, path);
-
-	int res = lremovexattr(full_path, name);
-	if (res == -1)
-		return -errno;
-	return 0;
-}
-#endif /* HAVE_SETXATTR */
-
-static struct fuse_operations xmp_oper = {
-	.getattr	= xmp_getattr,
-	.access		= xmp_access,
-	.readlink	= xmp_readlink,
-	.readdir	= xmp_readdir,
-	.mknod		= xmp_mknod,
-	.mkdir		= xmp_mkdir,
-	.symlink	= xmp_symlink,
-	.unlink		= xmp_unlink,
-	.rmdir		= xmp_rmdir,
-	.rename		= xmp_rename,
-	.link		= xmp_link,
-	.chmod		= xmp_chmod,
-	.chown		= xmp_chown,
-	.truncate	= xmp_truncate,
-	.utimens	= xmp_utimens,
-	.open		= xmp_open,
-	.read		= xmp_read,
-	.write		= xmp_write,
-	.statfs		= xmp_statfs,
-	.create         = xmp_create,
-	.release	= xmp_release,
-	.fsync		= xmp_fsync,
-#ifdef HAVE_SETXATTR
-	.setxattr	= xmp_setxattr,
-	.getxattr	= xmp_getxattr,
-	.listxattr	= xmp_listxattr,
-	.removexattr	= xmp_removexattr,
-#endif
-};
-
-////////////////////////////////////////////////////////////////////////////////
-// END DEFAULT XMP FUNCTIONS
-////////////////////////////////////////////////////////////////////////////////
-
 /*
 * Read function that reads and encrypted file
 */
@@ -593,6 +510,90 @@ static int xmp_create(const char* path, mode_t mode, struct fuse_file_info* fi) 
 
     return 0;
 }
+
+#ifdef HAVE_SETXATTR
+static int xmp_setxattr(const char *path, const char *name, const char *value,
+			size_t size, int flags)
+{
+	char full_path[PATH_MAX];
+	enter_path(full_path, path);
+
+	int res = lsetxattr(full_path, name, value, size, flags);
+	if (res == -1)
+		return -errno;
+	return 0;
+}
+
+static int xmp_getxattr(const char *path, const char *name, char *value,
+			size_t size)
+{
+	char full_path[PATH_MAX];
+	enter_path(full_path, path);
+
+	int res = lgetxattr(full_path, name, value, size);
+	if (res == -1)
+		return -errno;
+	return res;
+}
+
+static int xmp_listxattr(const char *path, char *list, size_t size)
+{
+	char full_path[PATH_MAX];
+	enter_path(full_path, path);
+
+	int res = llistxattr(full_path, list, size);
+	if (res == -1)
+		return -errno;
+	return res;
+}
+
+static int xmp_removexattr(const char *path, const char *name)
+{
+	char full_path[PATH_MAX];
+	enter_path(full_path, path);
+
+	int res = lremovexattr(full_path, name);
+	if (res == -1)
+		return -errno;
+	return 0;
+}
+#endif /* HAVE_SETXATTR */
+
+static struct fuse_operations xmp_oper = {
+	.getattr	= xmp_getattr,
+	.access		= xmp_access,
+	.readlink	= xmp_readlink,
+	.readdir	= xmp_readdir,
+	.mknod		= xmp_mknod,
+	.mkdir		= xmp_mkdir,
+	.symlink	= xmp_symlink,
+	.unlink		= xmp_unlink,
+	.rmdir		= xmp_rmdir,
+	.rename		= xmp_rename,
+	.link		= xmp_link,
+	.chmod		= xmp_chmod,
+	.chown		= xmp_chown,
+	.truncate	= xmp_truncate,
+	.utimens	= xmp_utimens,
+	.open		= xmp_open,
+	.read		= xmp_read,
+	.write		= xmp_write,
+	.statfs		= xmp_statfs,
+	.create         = xmp_create,
+	.release	= xmp_release,
+	.fsync		= xmp_fsync,
+#ifdef HAVE_SETXATTR
+	.setxattr	= xmp_setxattr,
+	.getxattr	= xmp_getxattr,
+	.listxattr	= xmp_listxattr,
+	.removexattr	= xmp_removexattr,
+#endif
+};
+
+////////////////////////////////////////////////////////////////////////////////
+// END DEFAULT XMP FUNCTIONS
+////////////////////////////////////////////////////////////////////////////////
+
 
 /*
 * Main method to be called on program start
