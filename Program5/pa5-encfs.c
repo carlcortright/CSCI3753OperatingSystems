@@ -37,10 +37,10 @@ typedef struct{
 /*
 * Gets the path for the "real" directory
 */
-static void enter_path(char full_path[MAX_PATH_LEN], const char *path)
+static void enter_path(char full_path[PATH_MAX], const char *path)
 {
     strcpy(full_path, EN_DATA->rootdir);
-    strncat(full_path, path, MAX_PATH_LEN);
+    strncat(full_path, path, PATH_MAX);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -54,7 +54,7 @@ static void enter_path(char full_path[MAX_PATH_LEN], const char *path)
 static int xmp_getattr(const char *path, struct stat *stbuf)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = lstat(full_path, stbuf);
@@ -70,7 +70,7 @@ static int xmp_getattr(const char *path, struct stat *stbuf)
 static int xmp_access(const char *path, int mask)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = access(full_path, mask);
@@ -86,7 +86,7 @@ static int xmp_access(const char *path, int mask)
 static int xmp_readlink(const char *path, char *buf, size_t size)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = readlink(full_path, buf, size - 1);
@@ -106,7 +106,7 @@ static int xmp_readdir(const char *path, void *buf, fuse_fill_dir_t filler,
 
 	DIR *dp;
 	struct dirent *de;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	(void) offset;
@@ -136,7 +136,7 @@ static int xmp_mknod(const char *path, mode_t mode, dev_t rdev)
 {
 	int res;
 
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	if (S_ISREG(mode)) {
@@ -159,7 +159,7 @@ static int xmp_mknod(const char *path, mode_t mode, dev_t rdev)
 static int xmp_mkdir(const char *path, mode_t mode)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = mkdir(full_path, mode);
@@ -175,7 +175,7 @@ static int xmp_mkdir(const char *path, mode_t mode)
 static int xmp_unlink(const char *path)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = unlink(full_path);
@@ -191,7 +191,7 @@ static int xmp_unlink(const char *path)
 static int xmp_rmdir(const char *path)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = rmdir(full_path);
@@ -249,7 +249,7 @@ static int xmp_link(const char *from, const char *to)
 static int xmp_chmod(const char *path, mode_t mode)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = chmod(full_path, mode);
@@ -265,7 +265,7 @@ static int xmp_chmod(const char *path, mode_t mode)
 static int xmp_chown(const char *path, uid_t uid, gid_t gid)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = lchown(full_path, uid, gid);
@@ -281,7 +281,7 @@ static int xmp_chown(const char *path, uid_t uid, gid_t gid)
 static int xmp_truncate(const char *path, off_t size)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = truncate(full_path, size);
@@ -298,7 +298,7 @@ static int xmp_utimens(const char *path, const struct timespec ts[2])
 {
 	int res;
 	struct timeval tv[2];
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	tv[0].tv_sec = ts[0].tv_sec;
@@ -319,7 +319,7 @@ static int xmp_utimens(const char *path, const struct timespec ts[2])
 static int xmp_open(const char *path, struct fuse_file_info *fi)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	//fprintf(stderr, "full path %s\n", full_path);
@@ -338,7 +338,7 @@ static int xmp_open(const char *path, struct fuse_file_info *fi)
 static int xmp_statfs(const char *path, struct statvfs *stbuf)
 {
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	res = statvfs(full_path, stbuf);
@@ -374,7 +374,7 @@ static int xmp_fsync(const char *path, int isdatasync,
 static int xmp_setxattr(const char *path, const char *name, const char *value,
 			size_t size, int flags)
 {
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	int res = lsetxattr(full_path, name, value, size, flags);
@@ -386,7 +386,7 @@ static int xmp_setxattr(const char *path, const char *name, const char *value,
 static int xmp_getxattr(const char *path, const char *name, char *value,
 			size_t size)
 {
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	int res = lgetxattr(full_path, name, value, size);
@@ -397,7 +397,7 @@ static int xmp_getxattr(const char *path, const char *name, char *value,
 
 static int xmp_listxattr(const char *path, char *list, size_t size)
 {
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	int res = llistxattr(full_path, list, size);
@@ -408,7 +408,7 @@ static int xmp_listxattr(const char *path, char *list, size_t size)
 
 static int xmp_removexattr(const char *path, const char *name)
 {
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 
 	int res = lremovexattr(full_path, name);
@@ -463,7 +463,7 @@ static int xmp_read(const char *path, char *buf, size_t size, off_t offset,
 	FILE* fh;
 	FILE* tmp;
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	enter_path(full_path, path);
 	char encrypted[5]; // Encypted flag 'false' or 'true'
 
@@ -513,7 +513,7 @@ static int xmp_write(const char *path, const char *buf, size_t size,
 	FILE* tmp;
 	int fd;
 	int res;
-	char full_path[MAX_PATH_LEN];
+	char full_path[PATH_MAX];
 	char encrypted[5]; //this will be an integer indicating if it is encrypted
 
 	(void) fi;
@@ -572,7 +572,7 @@ static int xmp_write(const char *path, const char *buf, size_t size,
 static int xmp_create(const char* path, mode_t mode, struct fuse_file_info* fi) {
 
     (void) fi;
-    char full_path[MAX_PATH_LEN];
+    char full_path[PATH_MAX];
     int res;
     char* encrypted = "true";
 
